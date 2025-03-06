@@ -1,0 +1,79 @@
+# Ignore all generated data and output files
+output/
+*.csv
+*.json
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.wav
+*.mp3
+*.mp4
+*.pdf
+*.xlsx
+*.xls
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Ignore virtual environments
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.env
+.venv
+.conda/
+.conda-env/
+
+# Ignore IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+.project
+.pydevproject
+.settings/
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore logs
+*.log
+logs/
+
+# Keep all Python code files
+!*.py
+
+# Keep README and documentation files
+!README.md
+!README.txt
+!LICENSE
+!LICENSE.txt
+!requirements.txt
+!setup.py
+!pyproject.toml
+!MANIFEST.in
+!docs/
