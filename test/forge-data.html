@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge Data - DataForge</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container top-header">
+            <a href="#" class="logo">
+                <div class="logo-blue-dots">
+                    <div class="blue-dot"></div>
+                    <div class="blue-dot"></div>
+                    <div class="blue-dot"></div>
+                    <div class="blue-dot"></div>
+                </div>
+                <span class="brand-name">Data<span class="brand-highlight">Forge</span></span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="forge-data.html" class="active">Forge Data</a></li>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </nav>
+            <button class="menu-toggle">☰</button>
+        </div>
+    </header>
+
+    <!-- Page Title -->
+    <section class="page-title">
+        <div class="container">
+            <h1>Forge Your Synthetic Data</h1>
+            <p>Select a data type and customize parameters to generate high-quality synthetic data for your projects.</p>
+        </div>
+    </section>
+
+    <!-- Data Selection Page (Image 1 & 3 Combined Style) -->
+    <section class="main-content">
+        <div class="container">
+            <div class="card">
+                <div class="card-container">
+                    <div class="card-left">
+                        <div>
+                            <h2 class="card-title">Synthetic Data Generator</h2>
+                            <p class="card-subtitle">Configure your data generation parameters</p>
+
+                            <div class="data-controls">
+                                <div class="control-group">
+                                    <div class="control-label">
+                                        <span>Data Types</span>
+                                        <span class="chevron">›</span>
+                                    </div>
+                                    <div class="control-dropdown">
+                                        <ul>
+                                            <li><a href="#" class="dropdown-item active">Tabular Data</a></li>
+                                            <li><a href="#" class="dropdown-item">Image Data</a></li>
+                                            <li><a href="#" class="dropdown-item">Text Data</a></li>
+                                            <li><a href="#" class="dropdown-item">Time Series Data</a></li>
+                                            <li><a href="#" class="dropdown-item">Audio Data</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <div class="control-label">
+                                        <span>Format</span>
+                                        <span class="chevron">›</span>
+                                    </div>
+                                    <div class="control-dropdown">
+                                        <ul>
+                                            <li><a href="#" class="dropdown-item active">CSV</a></li>
+                                            <li><a href="#" class="dropdown-item">JSON</a></li>
+                                            <li><a href="#" class="dropdown-item">SQL</a></li>
+                                            <li><a href="#" class="dropdown-item">Excel</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <div class="control-label">
+                                        <span>Volume</span>
+                                    </div>
+                                    <input type="range" class="control-input" min="100" max="10000" value="1000" id="volume-slider">
+                                    <div class="volume-display">1,000 records</div>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <div class="control-label">
+                                        <span>Schema</span>
+                                    </div>
+                                    <div class="schema-editor">
+                                        <div class="schema-field">
+                                            <input type="text" value="id" class="field-name">
+                                            <select class="field-type">
+                                                <option value="id">ID</option>
+                                                <option value="integer">Integer</option>
+                                                <option value="float">Float</option>
+                                                <option value="string">String</option>
+                                                <option value="date">Date</option>
+                                                <option value="boolean">Boolean</option>
+                                            </select>
+                                            <button class="remove-field">×</button>
+                                        </div>
+                                        <div class="schema-field">
+                                            <input type="text" value="name" class="field-name">
+                                            <select class="field-type">
+                                                <option value="id">ID</option>
+                                                <option value="integer">Integer</option>
+                                                <option value="float">Float</option>
+                                                <option value="string" selected>String</option>
+                                                <option value="date">Date</option>
+                                                <option value="boolean">Boolean</option>
+                                            </select>
+                                            <button class="remove-field">×</button>
+                                        </div>
+                                        <div class="schema-field">
+                                            <input type="text" value="age" class="field-name">
+                                            <select class="field-type">
+                                                <option value="id">ID</option>
+                                                <option value="integer" selected>Integer</option>
+                                                <option value="float">Float</option>
+                                                <option value="string">String</option>
+                                                <option value="date">Date</option>
+                                                <option value="boolean">Boolean</option>
+                                            </select>
+                                            <button class="remove-field">×</button>
+                                        </div>
+                                        <div class="schema-field">
+                                            <input type="text" value="email" class="field-name">
+                                            <select class="field-type">
+                                                <option value="id">ID</option>
+                                                <option value="integer">Integer</option>
+                                                <option value="float">Float</option>
+                                                <option value="string" selected>String</option>
+                                                <option value="date">Date</option>
+                                                <option value="boolean">Boolean</option>
+                                            </select>
+                                            <button class="remove-field">×</button>
+                                        </div>
+                                        <button class="add-field">+ Add Field</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <a href="#" class="btn btn-outline">Preview</a>
+                            <a href="#" class="btn btn-primary">Generate & Download</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card-right">
+                        <div class="preview-container">
+                            <h3>Data Preview</h3>
+                            <div class="data-table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>id</th>
+                                            <th>name</th>
+                                            <th>age</th>
+                                            <th>email</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>John Smith</td>
+                                            <td>32</td>
+                                            <td>john.smith@example.com</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Emma Johnson</td>
+                                            <td>28</td>
+                                            <td>emma.j@example.com</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Michael Brown</td>
+                                            <td>45</td>
+                                            <td>michael.b@example.com</td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>Sophia Williams</td>
+                                            <td>36</td>
+                                            <td>sophia.w@example.com</td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>James Davis</td>
+                                            <td>41</td>
+                                            <td>james.d@example.com</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="preview-stats">
+                                <div class="stat-box">
+                                    <div class="stat-title">Distribution</div>
+                                    <div class="stat-visualization">
+                                        <div class="bar-chart">
+                                            <div class="bar" style="height: 60%;"></div>
+                                            <div class="bar" style="height: 80%;"></div>
+                                            <div class="bar" style="height: 40%;"></div>
+                                            <div class="bar" style="height: 70%;"></div>
+                                            <div class="bar" style="height: 50%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-title">Quality Score</div>
+                                    <div class="stat-value">96<span class="percent">%</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="data-types-grid">
+                <div class="data-type-card selected">
+                    <h3 class="data-type-title">Tabular Data</h3>
+                    <p class="data-type-desc">Create structured datasets with customizable schemas, distributions, and correlations.</p>
+                    <a href="#" class="btn btn-primary">Select</a>
+                </div>
+                
+                <div class="data-type-card">
+                    <h3 class="data-type-title">Image Data</h3>
+                    <p class="data-type-desc">Generate synthetic images with various patterns, shapes, and transformations.</p>
+                    <a href="#" class="btn btn-primary">Select</a>
+                </div>
+                
+                <div class="data-type-card">
+                    <h3 class="data-type-title">Text Data</h3>
+                    <p class="data-type-desc">Create text data with customizable content, length, and linguistic properties.</p>
+                    <a href="#" class="btn btn-primary">Select</a>
+                </div>
+                
+                <div class="data-type-card">
+                    <h3 class="data-type-title">Time Series Data</h3>
+                    <p class="data-type-desc">Generate time series data with trends, seasonality, and noise.</p>
+                    <a href="#" class="btn btn-primary">Select</a>
+                </div>
+                
+                <div class="data-type-card">
+                    <h3 class="data-type-title">Audio Data</h3>
+                    <p class="data-type-desc">Create synthetic audio signals with customizable properties.</p>
+                    <a href="#" class="btn btn-primary">Select</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="#" class="logo">
+                        <div class="logo-blue-dots">
+                            <div class="blue-dot"></div>
+                            <div class="blue-dot"></div>
+                            <div class="blue-dot"></div>
+                            <div class="blue-dot"></div>
+                        </div>
+                        <span class="brand-name">Data<span class="brand-highlight">Forge</span></span>
+                    </a>
+                    <p>Synthetic data generation platform for machine learning and testing.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Product</h3>
+                        <ul>
+                            <li><a href="#">Features</a></li>
+                            <li><a href="#">Pricing</a></li>
+                            <li><a href="#">Documentation</a></li>
+                            <li><a href="#">API</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Company</h3>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Community</a></li>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 DataForge. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">Twitter</a>
+                    <a href="#" class="social-link">LinkedIn</a>
+                    <a href="#" class="social-link">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
