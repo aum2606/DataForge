@@ -6,7 +6,7 @@
     <title>DataForge - Synthetic Data Generation</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="static/css/style.css">
     <style>
         /* Animation styles for landing page */
         .particles-container {
@@ -320,13 +320,13 @@
     <header>
         <div class="navbar">
             <div class="logo animate__animated animate__fadeIn">
-                <a href="/">Data<span class="forge-text">Forge</span></a>
+                <a href="index.html">Data<span class="forge-text">Forge</span></a>
             </div>
             <ul class="nav-links">
-                <li class="animate__animated animate__fadeInDown"><a href="/" {% if request.path == '/' %}class="active"{% endif %}>Home</a></li>
-                <li class="animate__animated animate__fadeInDown" style="animation-delay: 0.1s;"><a href="/forge" {% if request.path == '/forge' %}class="active"{% endif %}>Forge Data</a></li>
-                <li class="animate__animated animate__fadeInDown" style="animation-delay: 0.2s;"><a href="/documentation" {% if request.path == '/documentation' %}class="active"{% endif %}>Documentation</a></li>
-                <li class="animate__animated animate__fadeInDown" style="animation-delay: 0.3s;"><a href="/about" {% if request.path == '/about' %}class="active"{% endif %}>About</a></li>
+                <li class="animate__animated animate__fadeInDown"><a href="index.html" class="active">Home</a></li>
+                <li class="animate__animated animate__fadeInDown" style="animation-delay: 0.1s;"><a href="forge.html">Forge Data</a></li>
+                <li class="animate__animated animate__fadeInDown" style="animation-delay: 0.2s;"><a href="documentation.html">Documentation</a></li>
+                <li class="animate__animated animate__fadeInDown" style="animation-delay: 0.3s;"><a href="about.html">About</a></li>
             </ul>
         </div>
     </header>
@@ -361,7 +361,7 @@
         <div class="hero-content animate__animated animate__fadeIn">
             <h1 class="hero-title animate__animated animate__fadeInUp">Forge Synthetic Data</h1>
             <p class="animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">Create high-quality, realistic synthetic data for machine learning, testing, and development with precision and ease.</p>
-            <a href="{{ url_for('forge') }}" class="btn btn-primary btn-large forge-btn-animated animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">Start Forging</a>
+            <a href="forge.html" class="btn btn-primary btn-large forge-btn-animated animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">Start Forging</a>
         </div>
     </section>
 
@@ -433,7 +433,7 @@
             </div>
             <h2 class="animate__animated animate__fadeInUp">Ready to Create Synthetic Data?</h2>
             <p class="animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">Start forging high-quality synthetic data for your projects today.</p>
-            <a href="{{ url_for('forge') }}" class="btn btn-primary forge-btn-animated animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">Begin Forging</a>
+            <a href="forge.html" class="btn btn-primary forge-btn-animated animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">Begin Forging</a>
         </div>
     </section>
 
@@ -445,18 +445,18 @@
                     <h3>DataForge</h3>
                     <p>A comprehensive synthetic data generation platform for machine learning, testing, and development purposes.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-github"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/"><i class="fab fa-github"></i></a>
+                        <a href="https://twitter.com/"><i class="fab fa-twitter"></i></a>
+                        <a href="https://linkedin.com/"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
                 <div class="footer-section animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
                     <h3>Links</h3>
                     <ul class="footer-links">
-                        <li><a href="{{ url_for('index') }}">Home</a></li>
-                        <li><a href="{{ url_for('forge') }}">Forge Data</a></li>
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">About</a></li>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="forge.html">Forge Data</a></li>
+                        <li><a href="documentation.html">Documentation</a></li>
+                        <li><a href="about.html">About</a></li>
                     </ul>
                 </div>
                 <div class="footer-section animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
@@ -473,7 +473,7 @@
         </div>
     </footer>
 
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="static/js/main.js"></script>
     <script>
         // Generate particles for hero background
         document.addEventListener('DOMContentLoaded', function() {
@@ -558,3 +558,4 @@
     </script>
 </body>
 </html> 
+
