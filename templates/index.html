@@ -317,22 +317,19 @@
 </head>
 <body>
     <!-- Navigation -->
-    <nav>
-        <div class="container nav-container">
-            <a href="{{ url_for('index') }}" class="logo animate__animated animate__fadeIn">Data<span>Forge</span></a>
-            <ul class="nav-menu">
-                <li class="nav-item active animate__animated animate__fadeInDown"><a href="{{ url_for('index') }}" class="nav-link">Home</a></li>
-                <li class="nav-item animate__animated animate__fadeInDown" style="animation-delay: 0.1s;"><a href="{{ url_for('forge') }}" class="nav-link">Forge Data</a></li>
-                <li class="nav-item animate__animated animate__fadeInDown" style="animation-delay: 0.2s;"><a href="#" class="nav-link">Documentation</a></li>
-                <li class="nav-item animate__animated animate__fadeInDown" style="animation-delay: 0.3s;"><a href="#" class="nav-link">About</a></li>
-            </ul>
-            <div class="hamburger animate__animated animate__fadeIn" style="animation-delay: 0.4s;">
-                <span></span>
-                <span></span>
-                <span></span>
+    <header>
+        <div class="navbar">
+            <div class="logo animate__animated animate__fadeIn">
+                <a href="/">Data<span class="forge-text">Forge</span></a>
             </div>
+            <ul class="nav-links">
+                <li class="animate__animated animate__fadeInDown"><a href="/" {% if request.path == '/' %}class="active"{% endif %}>Home</a></li>
+                <li class="animate__animated animate__fadeInDown" style="animation-delay: 0.1s;"><a href="/forge" {% if request.path == '/forge' %}class="active"{% endif %}>Forge Data</a></li>
+                <li class="animate__animated animate__fadeInDown" style="animation-delay: 0.2s;"><a href="/documentation" {% if request.path == '/documentation' %}class="active"{% endif %}>Documentation</a></li>
+                <li class="animate__animated animate__fadeInDown" style="animation-delay: 0.3s;"><a href="/about" {% if request.path == '/about' %}class="active"{% endif %}>About</a></li>
+            </ul>
         </div>
-    </nav>
+    </header>
 
     <!-- Hero Section -->
     <section class="hero">

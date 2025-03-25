@@ -6,25 +6,163 @@
     <title>Forge Data - DataForge</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Success and error message styles */
+        .success-message, .error-message {
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .success-message {
+            background-color: #f0f9f0;
+            border: 1px solid #4CAF50;
+            color: #2e7d32;
+        }
+        
+        .error-message {
+            background-color: #fff6f6;
+            border: 1px solid #f44336;
+            color: #d32f2f;
+        }
+        
+        .success-icon, .error-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+        
+        .file-info {
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .download-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+        
+        .download-button:hover {
+            background-color: #45a049;
+        }
+        
+        .download-icon {
+            margin-right: 8px;
+        }
+        
+        .reload-button {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            padding: 10px 20px;
+            border-radius: 4px;
+            margin-top: 15px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        
+        .reload-button:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .image-preview {
+            margin: 20px 0;
+        }
+        
+        .image-preview img {
+            max-width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        /* Loading animation */
+        .loading-container {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .loading-animation {
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        .forge-animation {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+        
+        .hammer {
+            position: absolute;
+            top: 0;
+            right: 20px;
+            width: 40px;
+            height: 60px;
+            background-color: #555;
+            border-radius: 5px;
+            transform-origin: bottom right;
+            animation: hammerSwing 1.5s infinite;
+        }
+        
+        .anvil {
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            width: 60px;
+            height: 30px;
+            background-color: #333;
+            border-radius: 5px;
+        }
+        
+        .sparks {
+            position: absolute;
+            bottom: 30px;
+            left: 40px;
+            width: 8px;
+            height: 8px;
+            background-color: #ff6700;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff6700;
+            opacity: 0;
+            animation: sparkle 1.5s infinite;
+        }
+        
+        @keyframes hammerSwing {
+            0%, 100% { transform: rotate(-30deg); }
+            50% { transform: rotate(30deg); }
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav>
-        <div class="container nav-container">
-            <a href="{{ url_for('index') }}" class="logo">Data<span>Forge</span></a>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="{{ url_for('index') }}" class="nav-link">Home</a></li>
-                <li class="nav-item active"><a href="{{ url_for('forge') }}" class="nav-link">Forge Data</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Documentation</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">About</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <a href="/">Data<span class="forge-text">Forge</span></a>
             </div>
+            <ul class="nav-links">
+                <li><a href="/" {% if request.path == '/' %}class="active"{% endif %}>Home</a></li>
+                <li><a href="/forge" {% if request.path == '/forge' %}class="active"{% endif %}>Forge Data</a></li>
+                <li><a href="/documentation" {% if request.path == '/documentation' %}class="active"{% endif %}>Documentation</a></li>
+                <li><a href="/about" {% if request.path == '/about' %}class="active"{% endif %}>About</a></li>
+            </ul>
         </div>
-    </nav>
+    </header>
 
     <!-- Forge Container -->
     <div class="forge-container">
@@ -36,7 +174,7 @@
 
             <!-- Data Type Selection -->
             <div class="data-types">
-                <div class="data-card" data-type="tabular">
+                <div class="data-card selected" data-type="tabular">
                     <img src="{{ url_for('static', filename='images/tabular.jpg') }}" alt="Tabular Data" class="data-card-img">
                     <div class="data-card-content">
                         <h3>Tabular Data</h3>
@@ -82,10 +220,15 @@
                 </div>
             </div>
 
+            <!-- Configuration Section -->
+            <div id="configSection" class="mt-4">
+                <!-- This section will be dynamically updated with the form -->
+            </div>
+
             <!-- Configuration Sections -->
             <form id="forge-form">
                 <!-- Tabular Data Configuration -->
-                <div id="tabular-config" class="config-section" style="display: none;">
+                <div id="tabular-config" class="config-section" style="display: block;">
                     <h3>Tabular Data Configuration</h3>
                     <div class="config-form">
                         <div class="form-group">
@@ -124,7 +267,7 @@
                         <textarea id="custom-schema" name="custom_schema" class="form-control" rows="6" placeholder='{"age": {"type": "int", "min": 18, "max": 90}, "income": {"type": "float", "min": 20000, "max": 200000}}'>
                         </textarea>
                     </div>
-                    <button type="submit" id="generate-data" class="btn btn-primary">Generate Data</button>
+                    <button type="button" id="generate-tabular" class="btn btn-primary" onclick="generateTabularData()">Generate Data</button>
                 </div>
 
                 <!-- Image Data Configuration -->
@@ -161,7 +304,7 @@
                             </select>
                         </div>
                     </div>
-                    <button type="submit" id="generate-image-data" class="btn btn-primary">Generate Data</button>
+                    <button type="button" id="generate-image" class="btn btn-primary" onclick="generateImageData()">Generate Data</button>
                 </div>
 
                 <!-- Text Data Configuration -->
@@ -202,7 +345,7 @@
                             </select>
                         </div>
                     </div>
-                    <button type="submit" id="generate-text-data" class="btn btn-primary">Generate Data</button>
+                    <button type="button" id="generate-text-data" class="btn btn-primary" onclick="generateTextData()">Generate Data</button>
                 </div>
 
                 <!-- Time Series Data Configuration -->
@@ -252,7 +395,7 @@
                             <input type="number" id="num-series" name="num_series" class="form-control" min="1" max="10" value="1" required>
                         </div>
                     </div>
-                    <button type="submit" id="generate-ts-data" class="btn btn-primary">Generate Data</button>
+                    <button type="button" id="generate-ts-data" class="btn btn-primary" onclick="generateTimeseriesData()">Generate Data</button>
                 </div>
 
                 <!-- Audio Data Configuration -->
@@ -290,7 +433,7 @@
                             </select>
                         </div>
                     </div>
-                    <button type="submit" id="generate-audio-data" class="btn btn-primary">Generate Data</button>
+                    <button type="button" id="generate-audio-data" class="btn btn-primary" onclick="generateAudioData()">Generate Data</button>
                 </div>
             </form>
 
@@ -338,5 +481,535 @@
     </footer>
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        // Functions to handle data generation
+        function generateTabularData() {
+            // Get form data
+            const rows = document.getElementById('rows').value;
+            const outputFormat = document.getElementById('output-format').value;
+            const includeHeader = document.getElementById('include-header').value;
+            const schemaType = document.getElementById('schema-type').value;
+            let customSchema = null;
+            
+            if (schemaType === 'custom') {
+                const schemaInput = document.getElementById('custom-schema');
+                try {
+                    customSchema = JSON.parse(schemaInput.value.trim());
+                } catch (e) {
+                    alert('Invalid JSON in custom schema');
+                    return;
+                }
+            }
+            
+            // Show generating animation
+            document.getElementById('configSection').innerHTML = `
+                <div class="loading-container">
+                    <div class="loading-animation">
+                        <div class="forge-animation">
+                            <div class="hammer"></div>
+                            <div class="anvil"></div>
+                            <div class="sparks"></div>
+                        </div>
+                    </div>
+                    <p>Forging your synthetic data...</p>
+                </div>
+            `;
+            
+            // Create request data
+            const requestData = {
+                data_type: 'tabular',
+                num_rows: parseInt(rows, 10),
+                format: outputFormat,
+                schema: customSchema
+            };
+            
+            // Make AJAX request
+            fetch('/api/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Create success message with download link
+                    const rows = data.rows || 0;
+                    const columns = data.columns || 0;
+                    const format = data.format || 'csv';
+                    const filename = data.filename || 'data.csv';
+                    
+                    document.getElementById('configSection').innerHTML = `
+                        <div class="success-message">
+                            <div class="success-icon">✓</div>
+                            <h3>Data Successfully Forged!</h3>
+                            <p>${data.message || 'Your data has been generated successfully!'}</p>
+                            <div class="file-info">
+                                <p><strong>Rows:</strong> ${rows}</p>
+                                <p><strong>Columns:</strong> ${columns}</p>
+                                <p><strong>Format:</strong> ${format}</p>
+                                <p><strong>Filename:</strong> ${filename}</p>
+                            </div>
+                            <div class="download-container">
+                                <a href="${data.download_url}" class="download-button">
+                                    <span class="download-icon">↓</span>
+                                    Download File
+                                </a>
+                            </div>
+                            <button onclick="location.reload()" class="reload-button">Create Another</button>
+                        </div>
+                    `;
+                } else {
+                    // Error message
+                    document.getElementById('configSection').innerHTML = `
+                        <div class="error-message">
+                            <div class="error-icon">⚠</div>
+                            <h3>Error Generating Data</h3>
+                            <p>${data.message || 'An error occurred while generating the data.'}</p>
+                            <button onclick="location.reload()" class="reload-button">Try Again</button>
+                        </div>
+                    `;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('configSection').innerHTML = `
+                    <div class="error-message">
+                        <div class="error-icon">⚠</div>
+                        <h3>Error Generating Data</h3>
+                        <p>An error occurred while generating the data. Please try again.</p>
+                        <button onclick="location.reload()" class="reload-button">Try Again</button>
+                    </div>
+                `;
+            });
+        }
+        
+        function generateImageData() {
+            // Get form data
+            const imageType = document.getElementById('image-type').value;
+            const width = document.getElementById('width').value;
+            const height = document.getElementById('height').value;
+            const numImages = document.getElementById('num-images').value;
+            const format = document.getElementById('format').value;
+            
+            // Show generating animation
+            document.getElementById('configSection').innerHTML = `
+                <div class="loading-container">
+                    <div class="loading-animation">
+                        <div class="forge-animation">
+                            <div class="hammer"></div>
+                            <div class="anvil"></div>
+                            <div class="sparks"></div>
+                        </div>
+                    </div>
+                    <p>Forging your synthetic data...</p>
+                </div>
+            `;
+            
+            // Create request data
+            const requestData = {
+                data_type: 'image',
+                image_type: imageType,
+                width: parseInt(width, 10),
+                height: parseInt(height, 10),
+                num_images: parseInt(numImages, 10),
+                format: format,
+                color_mode: 'RGB'
+            };
+            
+            // Make AJAX request
+            fetch('/api/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Create success message with download link
+                    const width = data.width || 512;
+                    const height = data.height || 512;
+                    const num_images = data.num_images || 1;
+                    const format = data.format || 'png';
+                    const filename = data.filename || 'image.png';
+                    
+                    let imagePreview = '';
+                    if (data.view_url) {
+                        imagePreview = `
+                            <div class="image-preview">
+                                <h4>Preview:</h4>
+                                <img src="${data.view_url}" alt="Generated image" style="max-width: 100%; max-height: 300px;">
+                            </div>
+                        `;
+                    }
+                    
+                    document.getElementById('configSection').innerHTML = `
+                        <div class="success-message">
+                            <div class="success-icon">✓</div>
+                            <h3>Data Successfully Forged!</h3>
+                            <p>${data.message || 'Your image has been generated successfully!'}</p>
+                            <div class="file-info">
+                                <p><strong>Width:</strong> ${width}px</p>
+                                <p><strong>Height:</strong> ${height}px</p>
+                                <p><strong>Images:</strong> ${num_images}</p>
+                                <p><strong>Format:</strong> ${format}</p>
+                                <p><strong>Filename:</strong> ${filename}</p>
+                            </div>
+                            ${imagePreview}
+                            <div class="download-container">
+                                <a href="${data.download_url}" class="download-button">
+                                    <span class="download-icon">↓</span>
+                                    Download File
+                                </a>
+                            </div>
+                            <button onclick="location.reload()" class="reload-button">Create Another</button>
+                        </div>
+                    `;
+                } else {
+                    // Error message
+                    document.getElementById('configSection').innerHTML = `
+                        <div class="error-message">
+                            <div class="error-icon">⚠</div>
+                            <h3>Error Generating Data</h3>
+                            <p>${data.message || 'An error occurred while generating the data.'}</p>
+                            <button onclick="location.reload()" class="reload-button">Try Again</button>
+                        </div>
+                    `;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('configSection').innerHTML = `
+                    <div class="error-message">
+                        <div class="error-icon">⚠</div>
+                        <h3>Error Generating Data</h3>
+                        <p>An error occurred while generating the data. Please try again.</p>
+                        <button onclick="location.reload()" class="reload-button">Try Again</button>
+                    </div>
+                `;
+            });
+        }
+        
+        function generateTextData() {
+            // Get form data
+            const textType = document.getElementById('text-type').value;
+            const length = document.getElementById('length').value;
+            const language = document.getElementById('language').value;
+            const includeEntities = document.getElementById('include-entities').value;
+            
+            // Show generating animation
+            document.getElementById('configSection').innerHTML = `
+                <div class="loading-container">
+                    <div class="loading-animation">
+                        <div class="forge-animation">
+                            <div class="hammer"></div>
+                            <div class="anvil"></div>
+                            <div class="sparks"></div>
+                        </div>
+                    </div>
+                    <p>Forging your synthetic data...</p>
+                </div>
+            `;
+            
+            // Create request data
+            const requestData = {
+                data_type: 'text',
+                text_type: textType,
+                length: length,
+                language: language,
+                include_entities: includeEntities === 'true'
+            };
+            
+            // Make AJAX request
+            fetch('/api/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Create success message with download link
+                    const format = data.format || 'txt';
+                    const filename = data.filename || 'text.txt';
+                    const wordCount = data.word_count || 0;
+                    const language = data.language || 'en';
+                    
+                    let textPreview = '';
+                    if (data.preview) {
+                        textPreview = `
+                            <div class="text-preview">
+                                <h4>Preview:</h4>
+                                <div class="preview-content">${data.preview}</div>
+                            </div>
+                        `;
+                    }
+                    
+                    document.getElementById('configSection').innerHTML = `
+                        <div class="success-message">
+                            <div class="success-icon">✓</div>
+                            <h3>Data Successfully Forged!</h3>
+                            <p>${data.message || 'Your text has been generated successfully!'}</p>
+                            <div class="file-info">
+                                <p><strong>Type:</strong> ${textType}</p>
+                                <p><strong>Word Count:</strong> ${wordCount}</p>
+                                <p><strong>Language:</strong> ${language}</p>
+                                <p><strong>Format:</strong> ${format}</p>
+                                <p><strong>Filename:</strong> ${filename}</p>
+                            </div>
+                            ${textPreview}
+                            <div class="download-container">
+                                <a href="${data.download_url}" class="download-button">
+                                    <span class="download-icon">↓</span>
+                                    Download File
+                                </a>
+                            </div>
+                            <button onclick="location.reload()" class="reload-button">Create Another</button>
+                        </div>
+                    `;
+                } else {
+                    // Error message
+                    document.getElementById('configSection').innerHTML = `
+                        <div class="error-message">
+                            <div class="error-icon">⚠</div>
+                            <h3>Error Generating Data</h3>
+                            <p>${data.message || 'An error occurred while generating the data.'}</p>
+                            <button onclick="location.reload()" class="reload-button">Try Again</button>
+                        </div>
+                    `;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('configSection').innerHTML = `
+                    <div class="error-message">
+                        <div class="error-icon">⚠</div>
+                        <h3>Error Generating Data</h3>
+                        <p>An error occurred while generating the data. Please try again.</p>
+                        <button onclick="location.reload()" class="reload-button">Try Again</button>
+                    </div>
+                `;
+            });
+        }
+        
+        function generateTimeseriesData() {
+            // Get form data
+            const tsLength = document.getElementById('ts-length').value;
+            const frequency = document.getElementById('frequency').value;
+            const numSeries = document.getElementById('num-series').value;
+            
+            // Get selected components
+            const componentCheckboxes = document.querySelectorAll('input[name="components"]:checked');
+            const components = Array.from(componentCheckboxes).map(cb => cb.value);
+            
+            // Show generating animation
+            document.getElementById('configSection').innerHTML = `
+                <div class="loading-container">
+                    <div class="loading-animation">
+                        <div class="forge-animation">
+                            <div class="hammer"></div>
+                            <div class="anvil"></div>
+                            <div class="sparks"></div>
+                        </div>
+                    </div>
+                    <p>Forging your synthetic data...</p>
+                </div>
+            `;
+            
+            // Create request data
+            const requestData = {
+                data_type: 'timeseries',
+                ts_length: parseInt(tsLength, 10),
+                frequency: frequency,
+                num_series: parseInt(numSeries, 10),
+                components: components
+            };
+            
+            // Make AJAX request
+            fetch('/api/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Create success message with download link
+                    const format = data.format || 'csv';
+                    const filename = data.filename || 'timeseries.csv';
+                    const length = data.length || 0;
+                    const numSeries = data.num_series || 1;
+                    
+                    let chartPreview = '';
+                    if (data.chart_url) {
+                        chartPreview = `
+                            <div class="chart-preview">
+                                <h4>Preview:</h4>
+                                <img src="${data.chart_url}" alt="Time series chart" style="max-width: 100%;">
+                            </div>
+                        `;
+                    }
+                    
+                    document.getElementById('configSection').innerHTML = `
+                        <div class="success-message">
+                            <div class="success-icon">✓</div>
+                            <h3>Data Successfully Forged!</h3>
+                            <p>${data.message || 'Your time series data has been generated successfully!'}</p>
+                            <div class="file-info">
+                                <p><strong>Length:</strong> ${length} points</p>
+                                <p><strong>Frequency:</strong> ${frequency}</p>
+                                <p><strong>Series:</strong> ${numSeries}</p>
+                                <p><strong>Format:</strong> ${format}</p>
+                                <p><strong>Filename:</strong> ${filename}</p>
+                            </div>
+                            ${chartPreview}
+                            <div class="download-container">
+                                <a href="${data.download_url}" class="download-button">
+                                    <span class="download-icon">↓</span>
+                                    Download File
+                                </a>
+                            </div>
+                            <button onclick="location.reload()" class="reload-button">Create Another</button>
+                        </div>
+                    `;
+                } else {
+                    // Error message
+                    document.getElementById('configSection').innerHTML = `
+                        <div class="error-message">
+                            <div class="error-icon">⚠</div>
+                            <h3>Error Generating Data</h3>
+                            <p>${data.message || 'An error occurred while generating the data.'}</p>
+                            <button onclick="location.reload()" class="reload-button">Try Again</button>
+                        </div>
+                    `;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('configSection').innerHTML = `
+                    <div class="error-message">
+                        <div class="error-icon">⚠</div>
+                        <h3>Error Generating Data</h3>
+                        <p>An error occurred while generating the data. Please try again.</p>
+                        <button onclick="location.reload()" class="reload-button">Try Again</button>
+                    </div>
+                `;
+            });
+        }
+        
+        function generateAudioData() {
+            // Get form data
+            const audioType = document.getElementById('audio-type').value;
+            const duration = document.getElementById('duration').value;
+            const sampleRate = document.getElementById('sample-rate').value;
+            const fileFormat = document.getElementById('file-format').value;
+            
+            // Show generating animation
+            document.getElementById('configSection').innerHTML = `
+                <div class="loading-container">
+                    <div class="loading-animation">
+                        <div class="forge-animation">
+                            <div class="hammer"></div>
+                            <div class="anvil"></div>
+                            <div class="sparks"></div>
+                        </div>
+                    </div>
+                    <p>Forging your synthetic data...</p>
+                </div>
+            `;
+            
+            // Create request data
+            const requestData = {
+                data_type: 'audio',
+                audio_type: audioType,
+                duration: parseFloat(duration),
+                sample_rate: parseInt(sampleRate, 10),
+                file_format: fileFormat
+            };
+            
+            // Make AJAX request
+            fetch('/api/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Create success message with download link
+                    const format = data.format || 'wav';
+                    const filename = data.filename || 'audio.wav';
+                    const duration = data.duration || 0;
+                    const sampleRate = data.sample_rate || 44100;
+                    
+                    let audioPreview = '';
+                    if (data.view_url) {
+                        audioPreview = `
+                            <div class="audio-preview">
+                                <h4>Preview:</h4>
+                                <audio controls style="width: 100%;">
+                                    <source src="${data.view_url}" type="audio/${format}">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        `;
+                    }
+                    
+                    document.getElementById('configSection').innerHTML = `
+                        <div class="success-message">
+                            <div class="success-icon">✓</div>
+                            <h3>Data Successfully Forged!</h3>
+                            <p>${data.message || 'Your audio data has been generated successfully!'}</p>
+                            <div class="file-info">
+                                <p><strong>Type:</strong> ${audioType}</p>
+                                <p><strong>Duration:</strong> ${duration}s</p>
+                                <p><strong>Sample Rate:</strong> ${sampleRate}Hz</p>
+                                <p><strong>Format:</strong> ${format}</p>
+                                <p><strong>Filename:</strong> ${filename}</p>
+                            </div>
+                            ${audioPreview}
+                            <div class="download-container">
+                                <a href="${data.download_url}" class="download-button">
+                                    <span class="download-icon">↓</span>
+                                    Download File
+                                </a>
+                            </div>
+                            <button onclick="location.reload()" class="reload-button">Create Another</button>
+                        </div>
+                    `;
+                } else {
+                    // Error message
+                    document.getElementById('configSection').innerHTML = `
+                        <div class="error-message">
+                            <div class="error-icon">⚠</div>
+                            <h3>Error Generating Data</h3>
+                            <p>${data.message || 'An error occurred while generating the data.'}</p>
+                            <button onclick="location.reload()" class="reload-button">Try Again</button>
+                        </div>
+                    `;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('configSection').innerHTML = `
+                    <div class="error-message">
+                        <div class="error-icon">⚠</div>
+                        <h3>Error Generating Data</h3>
+                        <p>An error occurred while generating the data. Please try again.</p>
+                        <button onclick="location.reload()" class="reload-button">Try Again</button>
+                    </div>
+                `;
+            });
+        }
+    </script>
 </body>
-</html> 
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About DataForge - Synthetic Data Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-card h3 {
+            color: #2c3e50;
+            margin-top: 0;
+            font-size: 1.4rem;
+        }
+        
+        .tech-stack {
+            background-color: #f1f8ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .tech-item {
+            background-color: #fff;
+            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <a href="/">Data<span class="forge-text">Forge</span></a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/" {% if request.path == '/' %}class="active"{% endif %}>Home</a></li>
+                <li><a href="/forge" {% if request.path == '/forge' %}class="active"{% endif %}>Forge Data</a></li>
+                <li><a href="/documentation" {% if request.path == '/documentation' %}class="active"{% endif %}>Documentation</a></li>
+                <li><a href="/about" {% if request.path == '/about' %}class="active"{% endif %}>About</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="about-container">
+        <section class="section">
+            <h1>About DataForge</h1>
+            <p>DataForge is a powerful synthetic data generation platform designed to help developers, data scientists, and researchers create realistic, high-quality synthetic data for a variety of applications. Whether you need test data for software development, training data for machine learning models, or sample data for demonstrations, DataForge provides an intuitive interface to generate exactly what you need.</p>
+            
+            <p>Our mission is to make synthetic data generation accessible, flexible, and efficient. We understand the challenges of acquiring real-world data - privacy concerns, limited availability, and lack of diversity. DataForge addresses these challenges by enabling you to create custom datasets that mimic real-world patterns without compromising sensitive information.</p>
+        </section>
+
+        <section class="section">
+            <h2>Key Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>Tabular Data Generation</h3>
+                    <p>Generate structured datasets with customizable schemas, data types, and relationships. Create customer records, transaction logs, inventory data, and more with control over row counts, column specifications, and output formats.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Image Synthesis</h3>
+                    <p>Create synthetic images with various patterns, including noise, gradients, geometric shapes, and patterns. Control dimensions, color modes, and generate single images or batches with multiple output formats.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Text Generation</h3>
+                    <p>Generate paragraphs, articles, conversations, and structured documents with control over length, language, and content structure. Perfect for testing NLP applications or content placeholders.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Time Series Creation</h3>
+                    <p>Create synthetic time series data with configurable trends, seasonality, noise, and anomalies. Control frequency, length, and components to generate realistic temporal patterns for forecasting and analysis.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Audio Synthesis</h3>
+                    <p>Generate audio signals including waveforms (sine, square, sawtooth, triangle), noise (white, pink, brown), speech-like audio, and musical patterns with control over duration, sample rate, and output format.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Flexible Export Options</h3>
+                    <p>Save your generated data in various formats including CSV, JSON, Excel, PNG, JPG, WAV, and more. Download single files or batched collections for immediate use in your projects.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Use Cases</h2>
+            <ul>
+                <li><strong>Software Development & Testing:</strong> Generate realistic test data to validate application functionality without using production data.</li>
+                <li><strong>Machine Learning:</strong> Create training, validation, and testing datasets with specific characteristics and distributions.</li>
+                <li><strong>Privacy-Preserving Analysis:</strong> Work with synthetic data that preserves statistical properties without exposing sensitive information.</li>
+                <li><strong>Education & Demonstration:</strong> Use synthetic datasets for teaching, presentations, and proof-of-concept demonstrations.</li>
+                <li><strong>Data Augmentation:</strong> Supplement limited real data with synthetic samples to improve model training and robustness.</li>
+                <li><strong>API & Integration Testing:</strong> Generate payloads and test datasets for API and integration testing scenarios.</li>
+            </ul>
+        </section>
+
+        <section class="section tech-stack">
+            <h2>Technology Stack</h2>
+            <p>DataForge is built using modern, open-source technologies to ensure performance, reliability, and flexibility:</p>
+            
+            <div class="tech-list">
+                <div class="tech-item">Python</div>
+                <div class="tech-item">Flask</div>
+                <div class="tech-item">NumPy</div>
+                <div class="tech-item">Pandas</div>
+                <div class="tech-item">Matplotlib</div>
+                <div class="tech-item">PIL/Pillow</div>
+                <div class="tech-item">SciPy</div>
+                <div class="tech-item">librosa</div>
+                <div class="tech-item">Faker</div>
+                <div class="tech-item">JavaScript</div>
+                <div class="tech-item">HTML5</div>
+                <div class="tech-item">CSS3</div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Project Architecture</h2>
+            <p>DataForge follows a modular architecture where each data type has its own specialized generator module:</p>
+            <ul>
+                <li><strong>data_types/tabular_data.py:</strong> Handles generation of tabular datasets</li>
+                <li><strong>data_types/image_data.py:</strong> Implements image generation algorithms</li>
+                <li><strong>data_types/text_data.py:</strong> Provides text generation capabilities</li>
+                <li><strong>data_types/time_series_data.py:</strong> Creates time series data</li>
+                <li><strong>data_types/audio_data.py:</strong> Generates audio signals</li>
+            </ul>
+            <p>This modular approach makes the codebase maintainable and extensible, allowing for easy addition of new data types and generation methods.</p>
+        </section>
+
+        <section class="section">
+            <h2>Future Development</h2>
+            <p>The DataForge project is continuously evolving with planned enhancements including:</p>
+            <ul>
+                <li>Advanced relational data generation with foreign key relationships</li>
+                <li>Deep learning-based synthetic data generation</li>
+                <li>API endpoints for programmatic access</li>
+                <li>Saving and sharing of generation templates</li>
+                <li>Additional data types and export formats</li>
+                <li>Enhanced preview and visualization capabilities</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>About the Team</h2>
+            <p>DataForge was created by a team of data scientists and software engineers passionate about solving data-related challenges. We believe in the power of synthetic data to enable innovation while protecting privacy and overcoming data limitations.</p>
+            <p>We welcome contributions, feedback, and suggestions from the community to make DataForge even better.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 DataForge - Synthetic Data Generator</p>
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/forge">Forge Data</a>
+                <a href="/documentation">Documentation</a>
+                <a href="/about">About</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html> 

@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - DataForge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .docs-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .sidebar {
+            position: sticky;
+            top: 2rem;
+            height: calc(100vh - 4rem);
+            overflow-y: auto;
+            padding-right: 1rem;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .sidebar a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        
+        .sidebar a:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .sidebar .section-title {
+            font-weight: bold;
+            margin-top: 1rem;
+            color: #2c3e50;
+        }
+        
+        .content {
+            padding-left: 1rem;
+        }
+        
+        .content section {
+            margin-bottom: 3rem;
+            scroll-margin-top: 2rem;
+        }
+        
+        .parameter-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .parameter-table th,
+        .parameter-table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .parameter-table th {
+            background-color: #f5f5f5;
+        }
+        
+        .parameter-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .code-example {
+            background-color: #f8f8f8;
+            border-radius: 4px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: monospace;
+            border-left: 4px solid #4285f4;
+        }
+        
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: relative;
+                height: auto;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <a href="/">Data<span class="forge-text">Forge</span></a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/" {% if request.path == '/' %}class="active"{% endif %}>Home</a></li>
+                <li><a href="/forge" {% if request.path == '/forge' %}class="active"{% endif %}>Forge Data</a></li>
+                <li><a href="/documentation" {% if request.path == '/documentation' %}class="active"{% endif %}>Documentation</a></li>
+                <li><a href="/about" {% if request.path == '/about' %}class="active"{% endif %}>About</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="docs-container">
+        <div class="grid-layout">
+            <aside class="sidebar">
+                <h2>Contents</h2>
+                <ul>
+                    <li><a href="#getting-started">Getting Started</a></li>
+                    <li class="section-title">Data Types</li>
+                    <li><a href="#tabular-data">Tabular Data</a></li>
+                    <li><a href="#image-data">Image Data</a></li>
+                    <li><a href="#text-data">Text Data</a></li>
+                    <li><a href="#timeseries-data">Time Series Data</a></li>
+                    <li><a href="#audio-data">Audio Data</a></li>
+                    <li class="section-title">API Reference</li>
+                    <li><a href="#api-overview">API Overview</a></li>
+                    <li><a href="#api-endpoints">API Endpoints</a></li>
+                    <li class="section-title">Advanced Usage</li>
+                    <li><a href="#best-practices">Best Practices</a></li>
+                    <li><a href="#use-cases">Use Case Examples</a></li>
+                    <li><a href="#troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </aside>
+            
+            <div class="content">
+                <h1>DataForge Documentation</h1>
+                
+                <section id="getting-started">
+                    <h2>Getting Started</h2>
+                    <p>DataForge provides an intuitive web interface for generating various types of synthetic data. To get started:</p>
+                    <ol>
+                        <li>Navigate to the <a href="/forge">Forge Data</a> page.</li>
+                        <li>Select the type of data you want to generate (tabular, image, text, time series, or audio).</li>
+                        <li>Configure the parameters for your data.</li>
+                        <li>Click the "Generate Data" button.</li>
+                        <li>Once generated, you can download your data or view previews (where applicable).</li>
+                    </ol>
+                    <p>Each data type has its own set of parameters that allow you to customize the generated data to your needs.</p>
+                </section>
+                
+                <section id="tabular-data">
+                    <h2>Tabular Data</h2>
+                    <p>Generate structured data in tabular format, perfect for databases, spreadsheets, and data analysis.</p>
+                    
+                    <h3>Parameters</h3>
+                    <table class="parameter-table">
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                            <th>Default</th>
+                        </tr>
+                        <tr>
+                            <td>Number of Rows</td>
+                            <td>The number of data points (rows) to generate</td>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>Schema Type</td>
+                            <td>Predefined schema templates (customer, transaction, etc.)</td>
+                            <td>customer</td>
+                        </tr>
+                        <tr>
+                            <td>Custom Schema</td>
+                            <td>Define your own schema with specific columns and data types</td>
+                            <td>null</td>
+                        </tr>
+                        <tr>
+                            <td>Output Format</td>
+                            <td>Format of the output file (CSV, JSON, Excel, PKL)</td>
+                            <td>CSV</td>
+                        </tr>
+                    </table>
+                    
+                    <h3>Available Column Types</h3>
+                    <ul>
+                        <li><strong>id</strong>: Sequential identifiers</li>
+                        <li><strong>int</strong>: Integer values with min/max bounds</li>
+                        <li><strong>float</strong>: Floating-point values with min/max bounds</li>
+                        <li><strong>boolean</strong>: True/False values</li>
+                        <li><strong>category</strong>: Values from a predefined set of categories</li>
+                        <li><strong>date</strong>: Random dates within a range</li>
+                        <li><strong>datetime</strong>: Random date and time values</li>
+                        <li><strong>name</strong>: Random person names</li>
+                        <li><strong>address</strong>: Random addresses</li>
+                        <li><strong>email</strong>: Random email addresses</li>
+                        <li><strong>phone</strong>: Random phone numbers</li>
+                        <li><strong>text</strong>: Random text of specified length</li>
+                    </ul>
+                    
+                    <h3>Example</h3>
+                    <div class="code-example">
+<pre>// Customer data schema example
+{
+  "customer_id": {"type": "id"},
+  "name": {"type": "name"},
+  "email": {"type": "email"},
+  "age": {"type": "int", "min": 18, "max": 65},
+  "signup_date": {"type": "date", "start": "2020-01-01", "end": "2023-12-31"},
+  "is_active": {"type": "boolean", "true_probability": 0.8},
+  "plan": {"type": "category", "categories": ["free", "basic", "premium", "enterprise"]}
+}</pre>
+                    </div>
+                </section>
+                
+                <section id="image-data">
+                    <h2>Image Data</h2>
+                    <p>Generate synthetic images with various patterns and characteristics.</p>
+                    
+                    <h3>Parameters</h3>
+                    <table class="parameter-table">
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                            <th>Default</th>
+                        </tr>
+                        <tr>
+                            <td>Image Type</td>
+                            <td>Type of image to generate (noise, gradient, pattern, geometric)</td>
+                            <td>noise</td>
+                        </tr>
+                        <tr>
+                            <td>Width</td>
+                            <td>Width of the image in pixels</td>
+                            <td>512</td>
+                        </tr>
+                        <tr>
+                            <td>Height</td>
+                            <td>Height of the image in pixels</td>
+                            <td>512</td>
+                        </tr>
+                        <tr>
+                            <td>Number of Images</td>
+                            <td>Number of images to generate</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>Output Format</td>
+                            <td>Format of the output file (PNG, JPG, WebP)</td>
+                            <td>PNG</td>
+                        </tr>
+                        <tr>
+                            <td>Color Mode</td>
+                            <td>RGB (color) or L (grayscale)</td>
+                            <td>RGB</td>
+                        </tr>
+                    </table>
+                    
+                    <h3>Image Types</h3>
+                    <ul>
+                        <li><strong>Noise</strong>: Random noise patterns (uniform, gaussian, salt_pepper)</li>
+                        <li><strong>Gradient</strong>: Smooth color gradients (horizontal, vertical, radial)</li>
+                        <li><strong>Pattern</strong>: Regular patterns (checkerboard, stripes, dots, grid)</li>
+                        <li><strong>Geometric</strong>: Shapes and geometry (circles, rectangles, lines, polygons)</li>
+                    </ul>
+                </section>
+                
+                <section id="text-data">
+                    <h2>Text Data</h2>
+                    <p>Generate various types of synthetic text content for different applications.</p>
+                    
+                    <h3>Parameters</h3>
+                    <table class="parameter-table">
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                            <th>Default</th>
+                        </tr>
+                        <tr>
+                            <td>Text Type</td>
+                            <td>Type of text to generate (paragraph, article, conversation, structured)</td>
+                            <td>paragraph</td>
+                        </tr>
+                        <tr>
+                            <td>Length</td>
+                            <td>Length of the generated text (short, medium, long)</td>
+                            <td>medium</td>
+                        </tr>
+                        <tr>
+                            <td>Language</td>
+                            <td>Language code for the generated text (en, es, fr, de)</td>
+                            <td>en</td>
+                        </tr>
+                        <tr>
+                            <td>Include Entities</td>
+                            <td>Whether to include named entities in the text</td>
+                            <td>false</td>
+                        </tr>
+                    </table>
+                    
+                    <h3>Text Types</h3>
+                    <ul>
+                        <li><strong>Paragraph</strong>: Simple paragraphs of text</li>
+                        <li><strong>Article</strong>: Structured article with title and paragraphs</li>
+                        <li><strong>Conversation</strong>: Dialogue between two or more speakers</li>
+                        <li><strong>Structured</strong>: Text with headings, sections, and paragraphs</li>
+                    </ul>
+                </section>
+                
+                <section id="timeseries-data">
+                    <h2>Time Series Data</h2>
+                    <p>Generate synthetic time series data with various patterns and components.</p>
+                    
+                    <h3>Parameters</h3>
+                    <table class="parameter-table">
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                            <th>Default</th>
+                        </tr>
+                        <tr>
+                            <td>Length</td>
+                            <td>Number of data points in the time series</td>
+                            <td>365</td>
+                        </tr>
+                        <tr>
+                            <td>Frequency</td>
+                            <td>Frequency of the time series (D, H, W, M, etc.)</td>
+                            <td>D (daily)</td>
+                        </tr>
+                        <tr>
+                            <td>Number of Series</td>
+                            <td>Number of time series to generate</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>Components</td>
+                            <td>Components to include (trend, seasonality, noise, etc.)</td>
+                            <td>trend, seasonality, noise</td>
+                        </tr>
+                        <tr>
+                            <td>Output Format</td>
+                            <td>Format of the output file (CSV, JSON, Excel, PKL)</td>
+                            <td>CSV</td>
+                        </tr>
+                    </table>
+                    
+                    <h3>Components</h3>
+                    <ul>
+                        <li><strong>Trend</strong>: Long-term direction (linear, quadratic, exponential, logarithmic)</li>
+                        <li><strong>Seasonality</strong>: Periodic patterns with specified frequency</li>
+                        <li><strong>Noise</strong>: Random variations (gaussian, uniform, autoregressive)</li>
+                        <li><strong>Anomalies</strong>: Outliers and unusual patterns</li>
+                    </ul>
+                </section>
+                
+                <section id="audio-data">
+                    <h2>Audio Data</h2>
+                    <p>Generate synthetic audio signals with various characteristics.</p>
+                    
+                    <h3>Parameters</h3>
+                    <table class="parameter-table">
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                            <th>Default</th>
+                        </tr>
+                        <tr>
+                            <td>Audio Type</td>
+                            <td>Type of audio to generate (waveform, noise, speech, musical)</td>
+                            <td>waveform</td>
+                        </tr>
+                        <tr>
+                            <td>Waveform Type</td>
+                            <td>Type of waveform for waveform audio (sine, square, sawtooth, triangle)</td>
+                            <td>sine</td>
+                        </tr>
+                        <tr>
+                            <td>Noise Type</td>
+                            <td>Type of noise for noise audio (white, pink, brown)</td>
+                            <td>white</td>
+                        </tr>
+                        <tr>
+                            <td>Duration</td>
+                            <td>Duration of the audio in seconds</td>
+                            <td>5.0</td>
+                        </tr>
+                        <tr>
+                            <td>Sample Rate</td>
+                            <td>Sample rate of the audio in Hz</td>
+                            <td>44100</td>
+                        </tr>
+                        <tr>
+                            <td>File Format</td>
+                            <td>Format of the output file (WAV, MP3)</td>
+                            <td>WAV</td>
+                        </tr>
+                    </table>
+                    
+                    <h3>Audio Types</h3>
+                    <ul>
+                        <li><strong>Waveform</strong>: Basic waveforms (sine, square, sawtooth, triangle)</li>
+                        <li><strong>Noise</strong>: Different types of noise (white, pink, brown)</li>
+                        <li><strong>Speech</strong>: Speech-like audio patterns</li>
+                        <li><strong>Musical</strong>: Musical patterns and chords</li>
+                    </ul>
+                </section>
+                
+                <section id="api-overview">
+                    <h2>API Overview</h2>
+                    <p>DataForge provides a REST API for programmatically generating synthetic data.</p>
+                    <p>All API endpoints use JSON for request and response data.</p>
+                </section>
+                
+                <section id="api-endpoints">
+                    <h2>API Endpoints</h2>
+                    
+                    <h3>Generate Data</h3>
+                    <p><strong>URL:</strong> /api/generate</p>
+                    <p><strong>Method:</strong> POST</p>
+                    <p><strong>Description:</strong> Generate synthetic data based on the provided configuration.</p>
+                    
+                    <h4>Request Body</h4>
+                    <div class="code-example">
+<pre>{
+  "data_type": "tabular",  // tabular, image, text, timeseries, audio
+  // Type-specific parameters here
+}</pre>
+                    </div>
+                    
+                    <h4>Response</h4>
+                    <div class="code-example">
+<pre>{
+  "success": true,
+  "message": "Generated data description",
+  "download_url": "/download/filename.ext",
+  // Type-specific metadata
+}</pre>
+                    </div>
+                    
+                    <h3>Example: Generating Tabular Data</h3>
+                    <div class="code-example">
+<pre>// Request
+POST /api/generate
+{
+  "data_type": "tabular",
+  "num_rows": 100,
+  "schema_type": "customer",
+  "format": "csv"
+}
+
+// Response
+{
+  "success": true,
+  "message": "Generated 100 rows of 7 columns in csv format",
+  "download_url": "/download/tabular_customer_20250325123456.csv",
+  "rows": 100,
+  "columns": 7,
+  "format": "csv",
+  "filename": "tabular_customer_20250325123456.csv"
+}</pre>
+                    </div>
+                </section>
+                
+                <section id="best-practices">
+                    <h2>Best Practices</h2>
+                    <ul>
+                        <li><strong>Choose Appropriate Data Types:</strong> Select the data type that best matches your requirements.</li>
+                        <li><strong>Start Small:</strong> For large datasets, start with a small number of rows/images to verify the configuration.</li>
+                        <li><strong>Use Custom Schemas:</strong> For tabular data, create custom schemas to match your specific data model.</li>
+                        <li><strong>Consider Performance:</strong> Very large datasets or high-resolution images may take longer to generate.</li>
+                        <li><strong>Use the API:</strong> For automated or batch generation, utilize the REST API rather than the web interface.</li>
+                    </ul>
+                </section>
+                
+                <section id="use-cases">
+                    <h2>Use Case Examples</h2>
+                    
+                    <h3>Testing a Database Application</h3>
+                    <p>Generate tabular data with a schema matching your database tables, then import the data for testing.</p>
+                    <div class="code-example">
+<pre>{
+  "data_type": "tabular",
+  "num_rows": 1000,
+  "format": "csv",
+  "schema": {
+    "user_id": {"type": "id"},
+    "username": {"type": "name"},
+    "email": {"type": "email"},
+    "registration_date": {"type": "date", "start": "2020-01-01"},
+    "last_login": {"type": "datetime"},
+    "is_active": {"type": "boolean", "true_probability": 0.9}
+  }
+}</pre>
+                    </div>
+                    
+                    <h3>Creating Test Images for Computer Vision</h3>
+                    <p>Generate a set of synthetic images with various patterns for testing image processing algorithms.</p>
+                    <div class="code-example">
+<pre>{
+  "data_type": "image",
+  "image_type": "pattern",
+  "width": 640,
+  "height": 480,
+  "num_images": 50,
+  "format": "png",
+  "color_mode": "RGB"
+}</pre>
+                    </div>
+                </section>
+                
+                <section id="troubleshooting">
+                    <h2>Troubleshooting</h2>
+                    
+                    <h3>Common Issues</h3>
+                    <ul>
+                        <li><strong>Generation Fails:</strong> Ensure all required parameters are provided and within valid ranges.</li>
+                        <li><strong>File Not Found:</strong> Generated files are temporary and may be removed after one hour.</li>
+                        <li><strong>Performance Issues:</strong> Reducing the size or complexity of the data can improve generation speed.</li>
+                    </ul>
+                    
+                    <h3>Error Messages</h3>
+                    <p>DataForge provides specific error messages when something goes wrong. Common error patterns include:</p>
+                    <ul>
+                        <li><strong>400 Bad Request:</strong> Invalid or missing parameters in your request.</li>
+                        <li><strong>500 Internal Server Error:</strong> An error occurred during data generation.</li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 DataForge - Synthetic Data Generator</p>
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/forge">Forge Data</a>
+                <a href="/documentation">Documentation</a>
+                <a href="/about">About</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Highlight the current section in the sidebar
+            const sections = document.querySelectorAll('.content section');
+            const navLinks = document.querySelectorAll('.sidebar a');
+            
+            window.addEventListener('scroll', function() {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    
+                    if (pageYOffset >= sectionTop - 200) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
